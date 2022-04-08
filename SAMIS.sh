@@ -45,8 +45,11 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '54,96p;97q' SAMIS.sh  > /mnt/SAMIS_PART2.sh
+sed -n '58,100p;101q' SAMIS.sh  > /mnt/SAMIS_PART2.sh
+sed -n '101,144p;145q' SAMIS.sh  > /mnt/SAMIS_PART3.sh
+
 chmod +x /mnt/SAMIS_PART2.sh
+chmod +x /mnt/SAMIS_PART3.sh
 
 arch-chroot /mnt ./SAMIS_PART2.sh
 exit
@@ -88,8 +91,6 @@ echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
 echo "Make the root password:"
 passwd
 
-
-sed -n '100,139p;140q' /SAMIS_PART2.sh > SAMIS_PART3.sh
 mv SAMIS_PART3.sh /home/$username/
 chmod +x /home/$username/SAMIS_PART3.sh
 
