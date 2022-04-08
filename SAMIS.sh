@@ -26,9 +26,10 @@ if [ "$ans" == 'y' ]; then
 	mkswap $swap
 	swapon $swap
 fi
-lsblk "Which partition for EFI?"
+lsblk
+echo "Which partition for EFI?"
 read efi
-lsblk "Is this labeled as an EFI System partition (usually labeled in case an OS is already present)? [yes/no]"
+echo "Is this labeled as an EFI System partition (usually labeled in case an OS is already present)? [yes/no]"
 read ans
 if [ "$ans" == 'no' ]; then
 	mkfs -vfat $efi
