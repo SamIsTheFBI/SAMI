@@ -81,6 +81,7 @@ systemctl enable NetworkManager
 echo "Enter username: "
 read username
 useradd -m $username
+passwd $username
 sed -i "s/^GROUP=.*/GROUP=users/g" /etc/default/useradd
 usermod -aG users $username
 echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
