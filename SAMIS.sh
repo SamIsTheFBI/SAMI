@@ -82,7 +82,7 @@ echo "Enter username: "
 read username
 useradd -m $username
 sed -i "s/^GROUP=.*/GROUP=users/g" /etc/default/useradd
-usermod -aG users 
+usermod -aG users $username
 echo "username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
 echo "Make the root password:"
 passwd
