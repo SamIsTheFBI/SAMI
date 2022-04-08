@@ -132,6 +132,7 @@ if [ "$ans" == '1' ]; then
 	echo "export PATH" >> .zshrc
 elif
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
 alias tmpdots='/usr/sbin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 tmpdots config --local status.showUntrackedFiles no
 
