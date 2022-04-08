@@ -88,13 +88,14 @@ echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
 echo "Make the root password:"
 passwd
 
-ai3_path=/home/$username/SAMIS_PART3.sh
-sed -n '97,139p;140q' SAMIS_PART2.sh > $ai3_path
-chown $username:$username $ai3_path
-chmod +x $ai3_path
+
+sed -n '100,139p;140q' /SAMIS_PART2.sh > SAMIS_PART3.sh
+mv SAMIS_PART3.sh /home/$username/
+chmod +x /home/$username/SAMIS_PART3.sh
+
 
 echo "Arch Linux has been installed in to your system. Type reboot to reboot your system"
-
+exit
 
 #PART3
 
