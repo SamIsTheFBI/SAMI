@@ -1,0 +1,5 @@
+# SAMIS - SamIsTheRetard's Arch Machine Installer Script
+
+This still doesn't do the complete job. Of course you'll be needed to give username and passwords.
+
+The code is not perfect yet but committing now because this script got JP text working in dwm bar and glyphs show properly in nano & vim and not just in cats & echoes. I messed up my last dwm setup and startx just wouldn't work. Upon reinstalling arch & setting dwm up with same settings (or maybe not?) glyphs wouldn't show in nano & vim. Not only that, I had magically made it possible for dwm status bar to show Japanese characters as well. And now they were all gone. Made this script because too lazy to set everything all up one by one. So looked at Bugswriter's script and made my own version. Part 3 messed up but somehow got zsh. Opened chromium to check for inabakumori and there it was. Glyphs working. Fonts working. And the Tsukuyomi's Reason for Existence song played as the ad! It was so cool!! I don't know which package did the thing but it was quite satisfying, discovering a cool artist while all this! I think the package that changed it was libxft-bgra-git. 
