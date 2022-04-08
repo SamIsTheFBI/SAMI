@@ -41,7 +41,7 @@ mount $efi /mnt/boot/efi
 
 pacman -Sy --noconfirm archlinux-keyring
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd wpa_supplicant iwd netctl sudo
+pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd wpa_supplicant iwd netctl sudo grub efibootmgr os-prober
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
