@@ -134,7 +134,7 @@ elif
 alias tmpdots='/usr/sbin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 tmpdots config --local status.showUntrackedFiles no
 
-"You are somewhat done. Restart X & hope for the best!"
+echo "You are somewhat done. Restart X & hope for the best!"
 
 exit
 
