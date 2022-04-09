@@ -46,7 +46,7 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 genfstab -U /mnt >> /mnt/etc/fstab
 
 sed -n '58,111p;112q' SAMIS.sh  > /mnt/SAMIS_PART2.sh
-sed -n '112,158p;159q' SAMIS.sh  > /mnt/SAMIS_PART3.sh
+sed -n '112,159p;160q' SAMIS.sh  > /mnt/SAMIS_PART3.sh
 
 chmod +x /mnt/SAMIS_PART2.sh
 chmod +x /mnt/SAMIS_PART3.sh
@@ -150,6 +150,8 @@ fi
 
 alias tmpdots='/usr/sbin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 tmpdots config --local status.showUntrackedFiles no
+
+sudo mv ~/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
 
 echo "You are somewhat done. DWM will start in a second. Set up zsh in st as well."
 sleep 4
