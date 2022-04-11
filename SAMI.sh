@@ -4,7 +4,7 @@ clear
 
 #PART1
 
-echo "Welcome to Sam's Arch Machine Installer Script"
+echo "Welcome to Sam's Arch Machine Installer script"
 loadkeys us
 
 timedatectl set-ntp true
@@ -45,13 +45,13 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '58,111p;112q' SAMIS.sh  > /mnt/SAMIS_PART2.sh
-sed -n '112,159p;160q' SAMIS.sh  > /mnt/SAMIS_PART3.sh
+sed -n '58,111p;112q' SAMI.sh  > /mnt/SAMI_PART2.sh
+sed -n '112,159p;160q' SAMI.sh  > /mnt/SAMI_PART3.sh
 
-chmod +x /mnt/SAMIS_PART2.sh
-chmod +x /mnt/SAMIS_PART3.sh
+chmod +x /mnt/SAMI_PART2.sh
+chmod +x /mnt/SAMI_PART3.sh
 
-arch-chroot /mnt ./SAMIS_PART2.sh
+arch-chroot /mnt ./SAMI_PART2.sh
 exit
 
 
@@ -102,8 +102,8 @@ echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
 echo "Make the root password: "
 passwd
 
-mv SAMIS_PART3.sh /home/$username/
-chmod +x /home/$username/SAMIS_PART3.sh
+mv SAMI_PART3.sh /home/$username/
+chmod +x /home/$username/SAMI_PART3.sh
 
 
 echo "Arch Linux has been installed in to your system. Type reboot to reboot your system"
