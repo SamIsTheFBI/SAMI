@@ -4,7 +4,7 @@ clear
 
 #PART1
 
-echo "Welcome to Sam's Arch Machine Installer script"
+echo "Welcome to SamIsTheRetard's Arch Machine Installer script"
 loadkeys us
 
 timedatectl set-ntp true
@@ -45,8 +45,8 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '58,111p;112q' SAMI.sh  > /mnt/SAMI_PART2.sh
-sed -n '112,159p;160q' SAMI.sh  > /mnt/SAMI_PART3.sh
+sed -n '58,104p;105q' SAMI.sh  > /mnt/SAMI_PART2.sh
+sed -n '105,152p;153q' SAMI.sh  > /mnt/SAMI_PART3.sh
 
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
@@ -77,17 +77,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sleep 5
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs ttf-nerd-fonts-symbols curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools slock arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp xdg-user-dirs rsync gvfs-mtp ranger ueberzug zsh vim
+pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs ttf-nerd-fonts-symbols curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp xdg-user-dirs rsync gvfs-mtp ranger ueberzug zsh vim
 
 TMPFILE=`mktemp`
 PWD=`pwd`
-wget "https://codeload.github.com/Templarian/MaterialDesign-Webfont/zip/refs/heads/master" -O $TMPFILE
-unzip -d $PWD $TMPFILE
-rm $TMPFILE
-sudo mkdir -p /usr/local/share/fonts
-sudo mv MaterialDesign-Webfont-master/fonts/* /usr/local/share/fonts/
-rm -rf MaterialDesign-Webfont-master/
-fc-cache -f
 
 systemctl enable NetworkManager
 
@@ -130,7 +123,7 @@ git clone https://aur.archlinux.org/paru.git ~/.local/src/paru
 cd ~/.local/src/paru
 makepkg -si
 cd ~
-paru -S libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono
+paru -S libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
 ln -sf ~/.config/x11/xinitrc ~/.xinitrc
 sudo timedatectl set-ntp true
