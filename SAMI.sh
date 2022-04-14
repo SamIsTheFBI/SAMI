@@ -45,11 +45,12 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '58,104p;105q' SAMI.sh  > /mnt/SAMI_PART2.sh
-sed -n '105,152p;153q' SAMI.sh  > /mnt/SAMI_PART3.sh
-
+sed -n '58,102p;103q' SAMI.sh  > /mnt/SAMI_PART2.sh
+sed -n '103,139p;140q' SAMI.sh  > /mnt/SAMI_PART3.sh
+sed -n '140,144p;145q' > /mnt/zshconfig.sh
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
+chmod +x /mnt/zshconfig.sh
 
 arch-chroot /mnt ./SAMI_PART2.sh
 exit
@@ -74,13 +75,10 @@ echo "127.0.1.1		arch.localdomain  arch" >> /etc/hosts
 echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ARCHMACHINE
 grub-mkconfig -o /boot/grub/grub.cfg
-sleep 5
+
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs ttf-nerd-fonts-symbols curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp xdg-user-dirs rsync gvfs-mtp ranger ueberzug zsh vim
-
-TMPFILE=`mktemp`
-PWD=`pwd`
+pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs ttf-nerd-fonts-symbols curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp xdg-user-dirs rsync gvfs-mtp ranger ueberzug zsh vim zathura zathura-cb zathura-pdf-mupdf notepadqq
 
 systemctl enable NetworkManager
 
@@ -95,8 +93,8 @@ echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
 echo "Make the root password: "
 passwd
 
-mv SAMI_PART3.sh /home/$username/
-chmod +x /home/$username/SAMI_PART3.sh
+mv SAMI_PART3.sh zshconfig.sh /home/$username/
+chmod +x /home/$username/*
 
 
 echo "Arch Linux has been installed in to your system. Type reboot to reboot your system"
@@ -105,6 +103,7 @@ exit
 #PART3
 
 clear
+echo "Connect to the internet" && sleep 1
 cd $HOME && nmtui
 
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/samistheretard/dotfiles.git tmpdotfiles
@@ -118,7 +117,7 @@ git clone https://github.com/SamIsTheRetard/slstatus.git ~/.local/src/slstatus
 sudo make clean -C ~/.local/src/slstatus install
 git clone https://github.com/SamIsTheRetard/st.git ~/.local/src/st
 sudo make clean -C ~/.local/src/st install
-
+ 
 git clone https://aur.archlinux.org/paru.git ~/.local/src/paru
 cd ~/.local/src/paru
 makepkg -si
@@ -129,26 +128,17 @@ ln -sf ~/.config/x11/xinitrc ~/.xinitrc
 sudo timedatectl set-ntp true
 sudo timedatectl set-timezone Asia/Calcutta
 sudo hwclock --systohc
-clear
-echo "What do you want to use for setting up zsh? zsh4human[1] Oh-My-Zsh[2]"
-read ans
-if [ "$ans" == '1' ]; then
-	sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
-	echo "alias dotfiles='/usr/sbin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'" >> .zshrc
-	echo "path+=(/home/samisthefbi/.local/bin)" >> .zshrc
-	echo "export PATH" >> .zshrc
-else
-	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
-alias tmpdots='/usr/sbin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-tmpdots config --local status.showUntrackedFiles no
-
 sudo mv ~/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
+rm ~/touchpad_config.txt
+clear
 
 echo "You are somewhat done. DWM will start in a second. Set up zsh in st as well."
-sleep 4
+sleep 3
 startx
 exit
 
-#End of file
+#ZSH_Config
+
+sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
+rm -rf .zshrc
+ln -sf ~/.config/zsh/zshrc .zshrc
