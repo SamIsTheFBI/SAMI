@@ -13,7 +13,7 @@ lsblk
 echo "Which drive to use?"
 read drive
 echo "In the next screen, note down which partitions you want to use as EFI, filesystem and swap. These will be required and you better not mess with the paths/device. Opening in 9s..."
-sleep 9
+sleep 1
 cfdisk $drive
 echo "Which partition to format for Linux Filesystem?"
 read linuxfs
