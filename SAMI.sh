@@ -47,7 +47,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 sed -n '60,102p;103q' SAMI.sh  > /mnt/SAMI_PART2.sh
 sed -n '103,131p;132q' SAMI.sh  > /mnt/SAMI_PART3.sh
-sed -n '132,135;136q' SAMI.sh > /mnt/zsh_config.sh
+sed -n '132,135p;136q' SAMI.sh > /mnt/zsh_config.sh
 
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
@@ -123,7 +123,7 @@ makepkg -si
 cd ..
 paru -S libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
-sudo ln -sf ~/.config/x11/xinitrc .xinitrc
+rm -rf .xinitrc && sudo ln -sf ~/.config/x11/xinitrc .xinitrc
 
 echo "You are somewhat done. DWM will start in a second. Config zsh in st"
 startx
