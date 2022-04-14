@@ -1,3 +1,3 @@
 # SAMI - SamIsTheRetard's Arch Machine Installer script
 
-A patchy suckless Arch setup with minimal decorations and less resource hungry.
+Zsh in tty is a bad idea, change it in scripts
