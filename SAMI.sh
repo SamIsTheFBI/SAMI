@@ -103,7 +103,7 @@ exit
 #PART3
 
 clear
-cd $HOME
+cd $HOME && nmtui
 
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/samistheretard/dotfiles.git tmpdotfiles
 rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
