@@ -4,7 +4,7 @@ clear
 
 #PART1
 
-echo "Welcome to SamIsTheRetard's Arch Machine Installer script"
+echo "Welcome to Sam's Arch Machine Installer Script"
 loadkeys us
 
 timedatectl set-ntp true
@@ -45,12 +45,13 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '58,102p;103q' SAMI.sh  > /mnt/SAMI_PART2.sh
-sed -n '103,139p;140q' SAMI.sh  > /mnt/SAMI_PART3.sh
-sed -n '140,144p;145q' > /mnt/zshconfig.sh
+sed -n '60,102p;103q' SAMI.sh  > /mnt/SAMI_PART2.sh
+sed -n '103,132p;133q' SAMI.sh  > /mnt/SAMI_PART3.sh
+sed -n '133,137;138q' SAMI.sh > /mnt/zsh_config.sh
+
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
-chmod +x /mnt/zshconfig.sh
+chmod +x /mnt/zsh_config.sh
 
 arch-chroot /mnt ./SAMI_PART2.sh
 exit
@@ -75,25 +76,24 @@ echo "127.0.1.1		arch.localdomain  arch" >> /etc/hosts
 echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ARCHMACHINE
 grub-mkconfig -o /boot/grub/grub.cfg
-
+sleep 5
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs ttf-nerd-fonts-symbols curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp xdg-user-dirs rsync gvfs-mtp ranger ueberzug zsh vim zathura zathura-cb zathura-pdf-mupdf notepadqq
+pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs ttf-nerd-fonts-symbols curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools slock arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp xdg-user-dirs rsync gvfs-mtp ranger ueberzug zsh vim zathura-cb zathura-pdf-mupdf notepadqq
 
 systemctl enable NetworkManager
 
 echo "Enter username: "
 read username
 useradd -m $username
-echo "Enter password for your username: "
 passwd $username
 sed -i "s/^GROUP=.*/GROUP=users/g" /etc/default/useradd
 usermod -aG users $username
 echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
-echo "Make the root password: "
+echo "Make the root password:"
 passwd
 
-mv SAMI_PART3.sh zshconfig.sh /home/$username/
+mv SAMI_PART3.sh zsh_config.sh /home/$username/
 chmod +x /home/$username/*
 
 
@@ -103,8 +103,7 @@ exit
 #PART3
 
 clear
-echo "Connect to the internet" && sleep 1
-cd $HOME && nmtui
+cd $HOME
 
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/samistheretard/dotfiles.git tmpdotfiles
 rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
@@ -117,28 +116,22 @@ git clone https://github.com/SamIsTheRetard/slstatus.git ~/.local/src/slstatus
 sudo make clean -C ~/.local/src/slstatus install
 git clone https://github.com/SamIsTheRetard/st.git ~/.local/src/st
 sudo make clean -C ~/.local/src/st install
- 
+
 git clone https://aur.archlinux.org/paru.git ~/.local/src/paru
 cd ~/.local/src/paru
 makepkg -si
-cd ~
+cd ..
 paru -S libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
-ln -sf ~/.config/x11/xinitrc ~/.xinitrc
-sudo timedatectl set-ntp true
-sudo timedatectl set-timezone Asia/Calcutta
-sudo hwclock --systohc
-sudo mv ~/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
-rm ~/touchpad_config.txt
-clear
+ln -sf ~/.config/x11/xinitrc .xinitrc
 
-echo "You are somewhat done. DWM will start in a second. Set up zsh in st as well."
-sleep 3
+echo "You are somewhat done. DWM will start in a second. Config zsh in st"
 startx
 exit
 
-#ZSH_Config
+#End of file
 
+#zsh config
 sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
 rm -rf .zshrc
 ln -sf ~/.config/zsh/zshrc .zshrc
