@@ -20,7 +20,7 @@ read linuxfs
 mkfs.ext4 $linuxfs
 echo "Make swap partition? [y/n]"
 read ans
-if [ "$ans" == 'y' ]; then
+if [[ $ans == y ]]; then
 	echo "Which partition for swap?"
 	read swap
 	mkswap $swap
@@ -31,7 +31,7 @@ echo "Which partition for EFI?"
 read efi
 echo "Is this labeled as an EFI System partition (usually labeled in case an OS is already present)? [yes/no]"
 read ans
-if [ "$ans" == 'no' ]; then
+if [[ $ans == no ]]; then
 	mkfs -vfat $efi
 fi
 
