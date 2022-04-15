@@ -108,13 +108,13 @@ cd $HOME && nmtui
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/samistheretard/dotfiles.git tmpdotfiles
 rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
 rm -r tmpdotfiles
-git clone https://github.com/SamIsTheRetard/dwm.git ~/.local/src/dwm
+git clone https://github.com/SamIsTheFBI/dwm.git ~/.local/src/dwm
 sudo make clean -C ~/.local/src/dwm install
-git clone https://github.com/SamIsTheRetard/dmenu.git ~/.local/src/dmenu
+git clone https://github.com/SamIsTheFBI/dmenu.git ~/.local/src/dmenu
 sudo make clean -C ~/.local/src/dmenu install
-git clone https://github.com/SamIsTheRetard/slstatus.git ~/.local/src/slstatus
+git clone https://github.com/SamIsTheFBI/slstatus.git ~/.local/src/slstatus
 sudo make clean -C ~/.local/src/slstatus install
-git clone https://github.com/SamIsTheRetard/st.git ~/.local/src/st
+git clone https://github.com/SamIsTheFBI/st.git ~/.local/src/st
 sudo make clean -C ~/.local/src/st install
 
 git clone https://aur.archlinux.org/paru.git ~/.local/src/paru
