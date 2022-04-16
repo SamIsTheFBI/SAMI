@@ -124,8 +124,8 @@ cd ~
 paru -S libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
 sudo mv touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf && rm -rf .xinitrc touchpad_config.txt && sudo ln -sf ~/.config/x11/xinitrc .xinitrc
-
-echo "You are somewhat done. DWM will start in a second. Config zsh in st"
+sudo timedatectl set-ntp true && sudo timedatectl set-timezone Asia/Calcutta
+echo "You are somewhat done. DWM should start in a second. Config zsh in st"
 startx
 exit
 
