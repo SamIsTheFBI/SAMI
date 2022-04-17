@@ -105,7 +105,7 @@ exit
 clear
 cd $HOME && nmtui
 
-git clone --separate-git-dir=$HOME/.dotfiles https://github.com/samistheretard/dotfiles.git tmpdotfiles
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/SamIsTheFBI/dotfiles.git tmpdotfiles
 rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
 rm -r tmpdotfiles
 git clone https://github.com/SamIsTheFBI/dwm.git ~/.local/src/dwm
