@@ -7,8 +7,6 @@ clear
 echo "Welcome to Sam's Arch Machine Installer Script"
 loadkeys us
 
-timedatectl set-ntp true
-timedatectl set-timezone Asia/Calcutta
 lsblk
 echo "Which drive to use?"
 read drive
@@ -45,8 +43,8 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '58,99p;100q' SAMI.sh  > /mnt/SAMI_PART2.sh
-sed -n '100,149p;150q' SAMI.sh  > /mnt/SAMI_PART3.sh
+sed -n '56,97p;98q' SAMI.sh  > /mnt/SAMI_PART2.sh
+sed -n '98,149p;150q' SAMI.sh  > /mnt/SAMI_PART3.sh
 
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
@@ -132,10 +130,6 @@ makepkg -si
 cd $HOME
 paru -S --skipreview libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
-#zsh config
-sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
-sudo ln -sf $HOME/.config/zsh/zshrc $HOME/.zshrc
-
 #touchpad config
 sudo mv $HOME/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
 rm -rf $HOME/.config/touchpad_config.txt
@@ -143,8 +137,14 @@ rm -rf $HOME/.config/touchpad_config.txt
 sudo ln -sf $HOME/.config/x11/xinitrc $HOME/.xinitrc
 sudo timedatectl set-ntp true
 sudo timedatectl set-timezone Asia/Calcutta
-echo "You are somewhat done. DWM should start in a second."
+
+#zsh config
+sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
+sudo ln -sf $HOME/.config/zsh/zshrc $HOME/.zshrc
+
+echo "You are somewhat done. Type startx and press enter"
 sleep 1
 startx
 exit
+
 #End of File
