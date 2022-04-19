@@ -136,7 +136,7 @@ git clone https://aur.archlinux.org/pikaur.git ~/.local/src/pikaur
 cd ~/.local/src/pikaur
 makepkg -si
 cd ~
-pikaur -S --noconfirm --noedit libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
+pikaur -S --noedit libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
 #touchpad config
 sudo mv ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
