@@ -7,6 +7,17 @@ clear
 echo "Welcome to Sam's Arch Machine Installer Script"
 loadkeys us
 
+echo "Create user profile: "
+echo "Set username: "
+read username
+echo "Set password for $username: "
+read password
+echo "Set root password: "
+read rootpassword
+echo $username:$password >> login_details.txt
+echo root:$rootpassword >> login_details.txt
+echo $username >> login_details.txt
+
 lsblk
 echo "Which drive to use?"
 read drive
@@ -43,9 +54,9 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '56,97p;98q' SAMI.sh  > /mnt/SAMI_PART2.sh
-sed -n '98,149p;150q' SAMI.sh  > /mnt/SAMI_PART3.sh
-
+sed -n '67,105p;106q' SAMI.sh  > /mnt/SAMI_PART2.sh
+sed -n '106,156p;157q' SAMI.sh  > /mnt/SAMI_PART3.sh
+mv login_details /mnt/
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
 
@@ -75,19 +86,16 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sleep 5
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs ttf-nerd-fonts-symbols curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools slock arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh vim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp notepadqq
+pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools slock arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh vim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp notepadqq
 
 systemctl enable NetworkManager
 
-echo "Enter username: "
-read username
+username=$(sed -n '3p' login_details.txt) && sed -i '3d' login_details.txt
 useradd -m $username
-passwd $username
 sed -i "s/^GROUP=.*/GROUP=users/g" /etc/default/useradd
 usermod -aG users $username
 echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
-echo "Make the root password:"
-passwd
+chpasswd < login_details.txt
 
 mv SAMI_PART3.sh /home/$username/
 chmod +x /home/$username/SAMI_PART3.sh
@@ -98,7 +106,7 @@ exit
 #PART3
 
 clear
-cd $HOME
+cd ~
 mkdir -p Applications Documents Downloads Cloud\ Storage/Hikari\ Drive Pictures Wallpapers Videos Screenshots Scripts Local\ Disk\ C Local\ Disk\ D Local\ Disk\ E
 nmtui
 
@@ -108,39 +116,39 @@ rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
 rm -r tmpdotfiles
 
 #Window Manager - dwm
-git clone https://github.com/SamIsTheFBI/dwm.git $HOME/.local/src/dwm
-sudo make clean -C $HOME/.local/src/dwm install
+git clone https://github.com/SamIsTheFBI/dwm.git ~/.local/src/dwm
+sudo make clean -C ~/.local/src/dwm install
 
 #App Launcher - dmenu
-git clone https://github.com/SamIsTheFBI/dmenu.git $HOME/.local/src/dmenu
-sudo make clean -C $HOME/.local/src/dmenu install
+git clone https://github.com/SamIsTheFBI/dmenu.git ~/.local/src/dmenu
+sudo make clean -C ~/.local/src/dmenu install
 
 #Status bar - slstatus
-git clone https://github.com/SamIsTheFBI/slstatus.git $HOME/.local/src/slstatus
-sudo make clean -C $HOME/.local/src/slstatus install
+git clone https://github.com/SamIsTheFBI/slstatus.git ~/.local/src/slstatus
+sudo make clean -C ~/.local/src/slstatus install
 
 #Terminal emulator - st
-git clone https://github.com/SamIsTheFBI/st.git $HOME/.local/src/st
-sudo make clean -C $HOME/.local/src/st install
+git clone https://github.com/SamIsTheFBI/st.git ~/.local/src/st
+sudo make clean -C ~/.local/src/st install
 
 #Getting paru (AUR Helper)
-git clone https://aur.archlinux.org/paru.git $HOME/.local/src/paru
-cd $HOME/.local/src/paru
+git clone https://aur.archlinux.org/pikaur.git ~/.local/src/pikaur
+cd ~/.local/src/pikaur
 makepkg -si
-cd $HOME
-paru -S --skipreview libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
+cd ~
+pikaur -S --noconfirm --noedit libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
 #touchpad config
-sudo mv $HOME/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
-rm -rf $HOME/.config/touchpad_config.txt
+sudo mv ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
+#rm -rf $HOME/.config/touchpad_config.txt
 
-sudo ln -sf $HOME/.config/x11/xinitrc $HOME/.xinitrc
+ln -sf $HOME/.config/x11/xinitrc $HOME/.xinitrc
 sudo timedatectl set-ntp true
 sudo timedatectl set-timezone Asia/Calcutta
 
 #zsh config
-sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
-sudo ln -sf $HOME/.config/zsh/zshrc $HOME/.zshrc
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)" && ln -sf $HOME/.config/zsh/zshrc $HOME/.zshrc
+
 
 echo "You are somewhat done. Type startx and press enter"
 sleep 1
