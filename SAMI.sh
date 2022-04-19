@@ -56,7 +56,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 sed -n '67,105p;106q' SAMI.sh  > /mnt/SAMI_PART2.sh
 sed -n '106,156p;157q' SAMI.sh  > /mnt/SAMI_PART3.sh
-mv login_details /mnt/
+mv login_details.txt /mnt/
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
 
