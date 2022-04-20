@@ -10,6 +10,7 @@ This script installs my somewhat minimal Arch setup. Emphasis on "somewhat minim
 
 - Part3: This part sets up my "work environment" by cloning my dotfiles, dwm, slstatus, dmenu and st repositories. Then, it installs pikaur (AUR helper) to further install a few more packages, configures touchpad,  set date & time and start zsh4humans script.
 
+btw high ram usage in screenshot because 10 different tabs opened in chromium.
 
 ## Instructions
 
