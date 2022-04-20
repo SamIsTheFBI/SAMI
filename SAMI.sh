@@ -139,8 +139,8 @@ cd ~
 pikaur -S --noedit libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
 #touchpad config
-sudo mv ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
-#rm -rf $HOME/.config/touchpad_config.txt
+sudo cp ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
+
 
 ln -sf $HOME/.config/x11/xinitrc $HOME/.xinitrc
 sudo timedatectl set-ntp true
