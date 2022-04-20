@@ -131,7 +131,7 @@ sudo make clean -C ~/.local/src/slstatus install
 git clone https://github.com/SamIsTheFBI/st.git ~/.local/src/st
 sudo make clean -C ~/.local/src/st install
 
-#Getting paru (AUR Helper)
+#AUR Helper - pikaur
 git clone https://aur.archlinux.org/pikaur.git ~/.local/src/pikaur
 cd ~/.local/src/pikaur
 makepkg -si
