@@ -95,7 +95,7 @@ useradd -m $username
 sed -i "s/^GROUP=.*/GROUP=users/g" /etc/default/useradd
 usermod -aG users $username
 echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
-chpasswd < login_details.txt
+chpasswd < login_details.txt && rm login_details.txt
 
 mv SAMI_PART3.sh /home/$username/
 chmod +x /home/$username/SAMI_PART3.sh
