@@ -1,6 +1,6 @@
 # SAMI - SamIsTheFBI's Arch Machine Installer script
 
-![neofetch ig. The RAM usage is high because of 8 different tabs in Chromium](https://telegra.ph/file/9dbe74f9c6a5cbfde2a16.png)
+![neofetch ig. The RAM usage is high because of 8 different tabs in Chromium](https://github.com/SamIsTheFBI/SAMI/blob/screenshots/Screenshot_30Apr2022_134047.png)   (https://telegra.ph/file/9dbe74f9c6a5cbfde2a16.png)
 
 This script installs my somewhat minimal Arch setup. Emphasis on "somewhat minimal" because my laptop has poor hardware specifications (lower than potato PCs & probably higher than minimalist GNU/Linux users).  The script is heavily inspired by [Bugswriter's Arch install script](https://github.com/Bugswriter/arch-linux-magic) and I omitted a lot of commands which either I didn't think were necessary or could be skipped. Just like his script, this one divides itself into 3 parts:
 
