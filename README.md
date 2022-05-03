@@ -1,21 +1,19 @@
 # SAMI - SamIsTheFBI's Arch Machine Installer script
 
-![neofetch ig. The RAM usage is high because of 8 different tabs in Chromium](https://github.com/SamIsTheFBI/SAMI/blob/screenshots/Screenshot_30Apr2022_134047.png)
+![The RAM usage is high because of 8 different tabs in Chromium](https://github.com/SamIsTheFBI/SAMI/blob/screenshots/Screenshot_30Apr2022_134047.png)
 
-This script installs my somewhat minimal Arch setup. Emphasis on "somewhat minimal" because my laptop has poor hardware specifications (lower than potato PCs & probably higher than minimalist GNU/Linux users).  The script is heavily inspired by [Bugswriter's Arch install script](https://github.com/Bugswriter/arch-linux-magic) and I omitted a lot of commands which either I didn't think were necessary or could be skipped. Just like his script, this one divides itself into 3 parts:
+This is a script to automate the installation process of my minimal Arch setup. Calling it minimal because my laptop has poor hardware specifications (lower than potato PCs & probably higher than minimalist GNU/Linux users). The script is heavily inspired by [Bugswriter's Arch install script](https://github.com/Bugswriter/arch-linux-magic). I omitted a lot of commands which I didn't think were necessary. Just like his script, this one divides itself into 3 parts:
 
-- Part1: This part will ask for your desired username & password, ask for making, formatting & mounting partitions, install base packages, divide main script into 2 more, chroot into the new system and run script part 2.
+- Part 1: The first part prompts the user for username & password, formatting & mounting of partitions, and continues to install base packages, divide the script into 2 more parts, chroot into the new system and run Part 2 of the script.
 
-- Part2: This part sets locale, sets hostname, installs a bunch of packages that I use, sets up username & password, move script part 3 to the new home directory and asks user to reboot the device.
+- Part 2: This second part sets locale, hostname, and installs a bunch of packages that I use. After it's done installing specified packages, it adds the user and sets up username & password, move Part 3 of the script to the new home directory and asks user to reboot the device.
 
-- Part3: This part sets up my "work environment" by cloning my dotfiles, dwm, slstatus, dmenu and st repositories. Then, it installs pikaur (AUR helper) to further install a few more packages, configures touchpad,  set date & time and start zsh4humans script.
-
-btw high ram usage in screenshot because 10 different tabs opened in chromium.
+- Part 3: The final part sets up my "work environment" by cloning my dotfiles, dwm, slstatus, dmenu and st repositories. Then, it installs pikaur (an AUR helper) to further install a few more packages. Then, it configures the touchpad, set date & time and start zsh4humans script to set up the shell.
 
 ## Instructions
 
-- Make a bootable flash drive by using Rufus, Etcher or any other tool you prefer.
-- Boot into that pure Arch bootable flash drive.
+- Get the latest [Arch ISO](https://archlinux.org/download/) and burn it to a flash drive by using Rufus, Etcher or any other tool you prefer.
+- Boot into that flash drive.
 - Upon reaching the initial prompt, [connect to internet](https://wiki.archlinux.org/title/installation_guide#Connect_to_the_internet).
 - Type the following:
 
@@ -32,7 +30,7 @@ chmod +x SAMI.sh
 
 ## Troubleshooting
 
-Check [Arch Linux Wiki Installation Guide](https://wiki.archlinux.org/title/installation_guide) because I think it's important for anyone using Arch to be used to Arch Wiki. And then there's [this guide](https://telegra.ph/Installing-Arch-Linux-03-24) I made on my first successful Arch install. It's newb friendly because it was written by a newb.
+Check [Arch Linux Wiki Installation Guide](https://wiki.archlinux.org/title/installation_guide) because I think it's important for anyone using Arch to be familiar with Arch Wiki. And then there's [this guide](https://telegra.ph/Installing-Arch-Linux-03-24) I made on my first successful Arch install. It's newb friendly because it was written by a newb. 
 
 ## Who should use this script?
 
@@ -44,12 +42,7 @@ This script is NOT for someone who wants to create their own Arch setup with eas
 
 ## Why write all this?
 
-\> Feel bored \
-\> Realise the need for installer script since I mess with my system a lot \
-\> Watch a couple of YouTube videos & read a bit of Arch Wiki \
-\> Give the script a cool name like [LARBS](https://github.com/LukeSmithxyz/LARBS) \
-\> Put it on GitHub \
-\> Feel cooler 
+Because I was bored. But I guess now I just want to write proper documentations. Of course there will be more updates to this and other repositories.
 
 ## Wallpaper Artwork Credits
 
