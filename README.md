@@ -1,6 +1,6 @@
 # SAMI - SamIsTheFBI's Arch Machine Installer script
 
-![The RAM usage is high because of 8 different tabs in Chromium](https://github.com/SamIsTheFBI/SAMI/blob/screenshots/Screenshot_30Apr2022_134047.png)
+![Screenshot](https://github.com/SamIsTheFBI/SAMI/blob/screenshots/Screenshot_20220508_021833.png)
 
 This is a script to automate the installation process of my minimal Arch setup. Calling it minimal because my laptop has poor hardware specifications (lower than potato PCs & probably higher than minimalist GNU/Linux users). The script is heavily inspired by [Bugswriter's Arch install script](https://github.com/Bugswriter/arch-linux-magic). I omitted a lot of commands which I didn't think were necessary. Just like his script, this one divides itself into 3 parts:
 
@@ -44,6 +44,6 @@ This script is NOT for someone who wants to create their own Arch setup with eas
 
 Because I was bored. But I guess now I just want to write proper documentations. Of course there will be more updates to this and other repositories.
 
-## Wallpaper Artwork Credits
+## Wallpaper Credits
 
-The wallpaper I used is a Koishi fanart I found on Pixiv drawn by [農民◆joeManyODw](https://www.pixiv.net/en/users/1568891).
+The picture of the dahlia flower I use as wallpaper can be found in [Pexels](https://www.pexels.com/photo/red-dahlia-flower-60597).
