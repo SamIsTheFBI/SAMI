@@ -11,9 +11,9 @@ echo "Create user profile: "
 echo "Set username: "
 read username
 echo "Set password for $username: "
-read password
+read -s password
 echo "Set root password: "
-read rootpassword
+read -s rootpassword
 echo $username:$password >> login_details.txt
 echo root:$rootpassword >> login_details.txt
 echo $username >> login_details.txt
