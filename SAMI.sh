@@ -86,7 +86,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sleep 5
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom min neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh nvim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp geany
+pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh nvim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp geany
 
 systemctl enable NetworkManager
 
@@ -109,7 +109,7 @@ clear
 cd ~
 mkdir -p Applications Documents Downloads Cloud\ Storage/Hikari\ Drive Pictures Wallpapers Videos Screenshots Scripts Local\ Disk\ C Local\ Disk\ D Local\ Disk\ E
 nmtui
-
+sudo rm -rf /SAMI_PART2.sh /login_details.txt
 #Dotfiles
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/SamIsTheFBI/dotfiles.git tmpdotfiles
 rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
