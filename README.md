@@ -1,6 +1,6 @@
 # SAMI - SamIsTheFBI's Arch Machine Installer script
 
-![Screenshot](https://github.com/SamIsTheFBI/SAMI/blob/screenshots/Screenshot_20220508_021833.png)
+![Screenshot](https://0x0.st/oaVw.png)
 
 This is a script to automate the installation process of my minimal Arch setup. Calling it minimal because my laptop has poor hardware specifications (lower than potato PCs & probably higher than minimalist GNU/Linux users). The script is heavily inspired by [Bugswriter's Arch install script](https://github.com/Bugswriter/arch-linux-magic). I omitted a lot of commands which I didn't think were necessary. Just like his script, this one divides itself into 3 parts:
 
@@ -46,4 +46,4 @@ Because I was bored. But I guess now I just want to write proper documentations.
 
 ## Wallpaper Credits
 
-The picture of the dahlia flower I use as wallpaper can be found in [Pexels](https://www.pexels.com/photo/red-dahlia-flower-60597).
+The wallpaper used is drawn by [Muji](https://www.pixiv.net/artworks/91389488).
