@@ -1,6 +1,6 @@
 # SAMI - SamIsTheFBI's Arch Machine Installer script
 
-![Screenshot](https://0x0.st/oaVw.png)
+![Screenshot](https://user-images.githubusercontent.com/70562711/173168308-aa33e90d-bf1a-4031-b462-553ca70d3d10.png)
 
 This is a script to automate the installation process of my minimal Arch setup. Calling it minimal because my laptop has poor hardware specifications (lower than potato PCs & probably higher than minimalist GNU/Linux users). The script is heavily inspired by [Bugswriter's Arch install script](https://github.com/Bugswriter/arch-linux-magic). I omitted a lot of commands which I didn't think were necessary. Just like his script, this one divides itself into 3 parts:
 
@@ -36,9 +36,9 @@ Check [Arch Linux Wiki Installation Guide](https://wiki.archlinux.org/title/inst
 
 ME.
 
-Or if you are someone who is distro-hopping and wants a different kind of "distro". Or if you're making an Arch installer script for your own rice & would actually tinker around with the script. Or if Arch wiki is daunting to look at but you are eager to install Arch manually.
+Or if you are someone who is trying out others' Arch setups. Or if you're making an Arch installer script for your own rice & would actually tinker around with the script. Or if Arch wiki is daunting to look at but you are eager to install Arch manually.
 
-This script is NOT for someone who wants to create their own Arch setup with ease because what you're actually looking for then is something like [ArchTitus](https://github.com/ChrisTitusTech/ArchTitus) or [Archfi](https://github.com/MatMoul/archfi). In my opinion no one should be making a permanent Arch setup with someone else's installer scripts, unless you're somehow happy with what they install for you.
+This script is NOT for someone who wants to create their own Arch setup with ease because what you're actually looking for then is something like [archinstall](https://man.archlinux.org/man/extra/archinstall/archinstall.1.en) or [Archfi](https://github.com/MatMoul/archfi). Unless you're happy with what they install for you, you should install Arch the traditional way.
 
 ## Why write all this?
 
@@ -46,4 +46,4 @@ Because I was bored. But I guess now I just want to write proper documentations.
 
 ## Wallpaper Credits
 
-The wallpaper used is drawn by [Muji](https://www.pixiv.net/artworks/91389488).
+[Link to the wallpaper in the screenshot above.](https://nordthemewallpapers.com/Backgrounds/16-9/All/img/3mcg97oyotu61.jpg)
