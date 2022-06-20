@@ -86,7 +86,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sleep 5
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --noconfirm xorg xorg-server xorg-xinit nitrogen picom chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics pcmanfm zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh nvim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp geany
+pacman -Sy --needed --noconfirm xorg xorg-server xorg-xinit xorg-xrdb nitrogen picom chromium neofetch python-pywal htop wget jq paplay xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics nemo zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh nvim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp geany rofi
 
 systemctl enable NetworkManager
 
@@ -136,7 +136,7 @@ git clone https://aur.archlinux.org/pikaur.git ~/.local/src/pikaur
 cd ~/.local/src/pikaur
 makepkg -si
 cd ~
-pikaur -S --noedit libxft-bgra-git jmtpfs nerd-fonts-jetbrains-mono i3lock-color
+pikaur -S --noedit libxft-bgra jmtpfs nerd-fonts-jetbrains-mono i3lock-color
 
 #touchpad config
 sudo cp ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
