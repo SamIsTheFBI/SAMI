@@ -7,7 +7,7 @@ clear
 echo "Welcome to Sam's Arch Machine Installer Script"
 loadkeys us
 
-echo "Create user profile: "
+echo "Create your user profile: "
 echo "Set username: "
 read username
 echo "Set password for $username: "
@@ -19,7 +19,7 @@ echo root:$rootpassword >> login_details.txt
 echo $username >> login_details.txt
 
 lsblk
-echo "Which drive to use?"
+echo "Which drive to use? [sda|sdb|sdc...]"
 read drive
 echo "In the next screen, note down which partitions you want to use as EFI, filesystem and swap. These will be required and you better not mess with the paths/device. Opening in 9s..."
 sleep 1
@@ -38,7 +38,7 @@ fi
 lsblk
 echo "Which partition for EFI?"
 read efi
-echo "Is this labeled as an EFI System partition (usually labeled in case an OS is already present)? [yes/no]"
+echo "Is it labeled as an EFI System partition (usually labeled in case an OS is already present)? [yes/no]"
 read ans
 if [[ $ans == no ]]; then
  mkfs -vfat $efi
@@ -55,7 +55,7 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 genfstab -U /mnt >> /mnt/etc/fstab
 
 sed -n '67,105p;106q' SAMI.sh  > /mnt/SAMI_PART2.sh
-sed -n '106,156p;157q' SAMI.sh  > /mnt/SAMI_PART3.sh
+sed -n '106,152p;153q' SAMI.sh  > /mnt/SAMI_PART3.sh
 mv login_details.txt /mnt/
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
@@ -136,23 +136,17 @@ git clone https://aur.archlinux.org/pikaur.git ~/.local/src/pikaur
 cd ~/.local/src/pikaur
 makepkg -si
 cd ~
-pikaur -S --noedit libxft-bgra jmtpfs nerd-fonts-jetbrains-mono i3lock-color
+pikaur -S --noedit libxft-bgra jmtpfs nerd-fonts-jetbrains-mono i3lock-color mpd-mpris
 
 #touchpad config
 sudo cp ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
 
-
 ln -sf $HOME/.config/x11/xinitrc $HOME/.xinitrc
 sudo timedatectl set-ntp true
 sudo timedatectl set-timezone Asia/Calcutta
+sudo timedatectl set-local-rtc 1 --adjust-system-clock
 
-#zsh config
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)" && ln -sf $HOME/.config/zsh/zshrc $HOME/.zshrc
-
-
-echo "You are somewhat done. Type startx and press enter"
+echo "You are somewhat done. Press startx to start DWM"
 sleep 1
-startx
-exit
 
-#End of File
+exit
