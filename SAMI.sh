@@ -38,7 +38,7 @@ read efi
 echo "Is it labeled as an EFI System partition (usually labeled in case an OS is already present)? [yes/no]"
 read ans
 if [[ $ans == no ]]; then
- mkfs -vfat $efi
+ mkfs.fat -F32 $efi
 fi
 
 mount $linuxfs /mnt
@@ -83,7 +83,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sleep 5
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --needed --noconfirm xorg xorg-server xorg-xinit xorg-xrdb nitrogen chromium neofetch python-pywal htop wget jq paplay xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics nemo zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh nvim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp rofi jgmenu
+pacman -Sy --needed --noconfirm xorg xorg-server xorg-xinit xorg-xrdb nitrogen chromium neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics nemo zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh neovim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp rofi jgmenu
 
 systemctl enable NetworkManager
 
