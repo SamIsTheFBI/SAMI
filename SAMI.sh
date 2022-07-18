@@ -18,13 +18,10 @@ echo $username:$password >> login_details.txt
 echo root:$rootpassword >> login_details.txt
 echo $username >> login_details.txt
 
-lsblk
-echo "Which drive to use? [sda|sdb|sdc...]"
-read drive
 echo "In the next screen, note down which partitions you want to use as EFI, filesystem and swap. These will be required and you better not mess with the paths/device. Opening in 9s..."
-sleep 1
+sleep 9
 cfdisk $drive
-echo "Which partition to format for Linux Filesystem?"
+echo "Which partition to format for Linux Filesystem? [/dev/sda1|sda2|...|sdb1|sdb2|...]"
 read linuxfs
 mkfs.ext4 $linuxfs
 echo "Make swap partition? [y/n]"
@@ -54,8 +51,8 @@ pacstrap /mnt nano git base linux linux-firmware networkmanager dhcpcd ifplugd w
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed -n '67,105p;106q' SAMI.sh  > /mnt/SAMI_PART2.sh
-sed -n '106,152p;153q' SAMI.sh  > /mnt/SAMI_PART3.sh
+sed -n '64,102p;103q' SAMI.sh  > /mnt/SAMI_PART2.sh
+sed -n '103,146p;147q' SAMI.sh  > /mnt/SAMI_PART3.sh
 mv login_details.txt /mnt/
 chmod +x /mnt/SAMI_PART2.sh
 chmod +x /mnt/SAMI_PART3.sh
@@ -86,7 +83,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sleep 5
 pacman -Sy --noconfirm sed
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-pacman -Sy --needed --noconfirm xorg xorg-server xorg-xinit xorg-xrdb nitrogen picom chromium neofetch python-pywal htop wget jq paplay xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics nemo zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh nvim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp rofi jgmenu
+pacman -Sy --needed --noconfirm xorg xorg-server xorg-xinit xorg-xrdb nitrogen chromium neofetch python-pywal htop wget jq paplay xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics nemo zip unzip unrar p7zip ffmpeg imagemagick dosfstools arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp rsync gvfs-mtp ranger ueberzug zsh nvim zathura-cb zathura-pdf-mupdf mpc jq yt-dlp rofi jgmenu
 
 systemctl enable NetworkManager
 
@@ -95,7 +92,7 @@ useradd -m $username
 sed -i "s/^GROUP=.*/GROUP=users/g" /etc/default/useradd
 usermod -aG users $username
 echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username
-chpasswd < login_details.txt && rm login_details.txt
+chpasswd < login_details.txt && rm -rf login_details.txt
 
 mv SAMI_PART3.sh /home/$username/
 chmod +x /home/$username/SAMI_PART3.sh
@@ -116,16 +113,13 @@ rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
 rm -r tmpdotfiles
 
 #Window Manager - dwm
-git clone https://github.com/SamIsTheFBI/dwm.git ~/.local/src/dwm
 sudo make clean -C ~/.local/src/dwm install
 
 #App Launcher - dmenu
-git clone https://github.com/SamIsTheFBI/dmenu.git ~/.local/src/dmenu
 sudo make clean -C ~/.local/src/dmenu install
 
-#Status bar - slstatus
-git clone https://github.com/SamIsTheFBI/slstatus.git ~/.local/src/slstatus
-sudo make clean -C ~/.local/src/slstatus install
+#Status bar - dwmblocks-async
+sudo make clean -C ~/.local/src/dwmblocks install
 
 #Terminal emulator - st
 git clone https://github.com/SamIsTheFBI/st.git ~/.local/src/st
@@ -136,7 +130,7 @@ git clone https://aur.archlinux.org/pikaur.git ~/.local/src/pikaur
 cd ~/.local/src/pikaur
 makepkg -si
 cd ~
-pikaur -S --noedit libxft-bgra jmtpfs nerd-fonts-jetbrains-mono i3lock-color mpd-mpris
+pikaur -S --noedit libxft-bgra jmtpfs nerd-fonts-jetbrains-mono i3lock-color mpd-mpris picom-animations-git
 
 #touchpad config
 sudo cp ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
