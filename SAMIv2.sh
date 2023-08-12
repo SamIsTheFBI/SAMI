@@ -69,8 +69,9 @@ echo -e "${TTY_SCRIPT} Generating fstab..."
 genfstab -U /mnt > /mnt/etc/fstab
 echo -e "${TTY_SCRIPT} DONE!"
 
-sed -n '78,$p' ./SAMIv2.sh  >> /mnt/SAMI_PART2.sh
-chmod +x /mnt/SAMI_PART2.sh
+sed -n '79,132p' ./SAMIv2.sh  >> /mnt/SAMI_PART2.sh
+sed -n '133,$p' ./SAMIv2.sh  >> /mnt/SAMI_PART3.sh
+chmod +x /mnt/SAMI_PART2.sh && chmod +x /mnt/SAMI_PART3.sh
 arch-chroot /mnt ./SAMI_PART2.sh
 rm -rf /mnt/SAMI_PART2.sh
 exit
@@ -86,10 +87,6 @@ TTY_INVERT="\e[7m"
 sudo systemctl enable NetworkManager
 echo -e "\n${TTY_SCRIPT} Yay! You're on the second phase of installing Arch Linux. How great is that?"
 echo -e "${TTY_SCRIPT} Now we'll be setting up your timezone, username, password and root password" && sleep 3s
-
-sudo pacman -Sy --noconfirm tzdata
-TIMEZONE="$(tzselect)"
-sudo timedatectl set-timezone ${TIMEZONE}
 
 echo -e "\n${TTY_SCRIPT} Enter password for root user:"
 passwd
@@ -128,33 +125,35 @@ echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
 grub-mkconfig -o /boot/grub/grub.cfg
 echo -e "${TTY_SCRIPT} DONE!"
+mv SAMI_PART3.sh /home/$USERNAME
+echo -e "\n${TTY_SCRIPT} Finally you have installed Arch Linux on your PC!"
+echo -e "${TTY_SCRIPT} What's left now is to customize it to suit your needs."
+echo -e "${TTY_SCRIPT} Shutdown, remove the Arch installation medium, boot into ArchLinux through the Grub bootloader menu and rice your system!" && umount -R /mnt
 
 #PART3 - Ricing
-
-USER_HOME=/home/$USERNAME
 
 sudo systemctl enable --now NetworkManager
 sudo systemctl enable --now wpa_supplicant
 
 sudo sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/g" /etc/pacman.conf
-sudo pacman -Sy archlinux-keyring
-sudo pacman -Sy --noconfirm --needed xorg xorg-server xorg-xinit nitrogen neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-jetbrains-mono-nerd sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics nemo zip unzip unrar p7zip ffmpeg imagemagick dosfstools slock arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp gvfs-mtp ranger ueberzug zsh zathura-cb zathura-pdf-mupdf mpc yt-dlp pipewire pipewire-pulse pipewire-alsa pipewire-jack pipewire-docs wireplumber arandr xrandr bluez blueman bluez-libs bluez-utils gpick harfbuzz gd neovim slim samba screenkey git copyq redshift jgmenu base-devel grep gawk playerctl
+sudo pacman -Sy --noconfirm --needed archlinux-keyring
+sudo pacman -Sy --noconfirm --needed xorg xorg-server xorg-xinit nitrogen neofetch python-pywal htop wget jq xdotool dunst base-devel pamixer maim xclip libnotify pulseaudio-alsa alsa-utils libpulse pavucontrol gvfs ntfs-3g openssh brightnessctl noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-jetbrains-mono-nerd sxiv mtpfs curl mpv rclone redshift xf86-input-synaptics nemo zip unzip unrar p7zip ffmpeg imagemagick dosfstools slock arc-gtk-theme papirus-icon-theme aria2 mpd ncmpcpp gvfs-mtp ranger ueberzug zsh zathura-cb zathura-pdf-mupdf mpc yt-dlp pipewire pipewire-pulse pipewire-alsa pipewire-jack pipewire-docs wireplumber arandr bluez blueman bluez-libs bluez-utils gpick harfbuzz gd neovim slim samba screenkey git copyq redshift jgmenu base-devel grep gawk playerctl exa rofi
 
 # build dwm
 git clone https://github.com/samisthefbi/dwm .local/src/dwm
-sudo make -C $USER_HOME/.local/src/dwm install && sudo rm -rf $USER_HOME/.local/src/dwm/config.h
+sudo make -C $HOME/.local/src/dwm install && sudo rm -rf $HOME/.local/src/dwm/config.h
 
 # build dmenu
 git clone https://github.com/samisthefbi/dmenu .local/src/dmenu
-sudo make -C $USER_HOME/.local/src/dmenu install && sudo rm -rf $USER_HOME/.local/src/dmenu/config.h
+sudo make -C $HOME/.local/src/dmenu install && sudo rm -rf $HOME/.local/src/dmenu/config.h
 
 # build st
 git clone https://github.com/samisthefbi/st .local/src/st
-sudo make -C $USER_HOME/.local/src/st install && sudo rm -rf $USER_HOME/.local/src/st/config.h
+sudo make -C $HOME/.local/src/st install && sudo rm -rf $HOME/.local/src/st/config.h
 
 # build dwmblocks-async
 git clone https://github.com/samisthefbi/dwmblocks-async .local/src/dwmblocks-async
-sudo make -C $USER_HOME/.local/src/dwmblocks-async install
+sudo make -C $HOME/.local/src/dwmblocks-async install
 
 # Yay AUR helper
 git clone https://aur.archlinux.org/yay-bin.git
@@ -162,27 +161,41 @@ cd yay-bin
 makepkg -si && cd .. && rm -r yay-bin
 
 # AUR packages
-yay -S picom-animations-git libxft-bgra mpd-mpris wsdd2
+yay -S picom-animations-git libxft-bgra mpd-mpris wsdd2 i3lock-color
 
+sudo cp ~/.config/touchpad_config.txt /etc/X11/xorg.conf.d/70-synaptics.conf
+
+sudo systemctl enable slim
+sudo systemctl enable bluetooth
+sudo systemctl enable smb
+sudo systemctl enable wsdd2
+systemctl enable --user mpd
+systemctl enable --user mpd-mpris
+
+sudo pacman -Sy --needed --noconfirm tzdata
+TIMEZONE="$(tzselect)"
+sudo timedatectl set-timezone ${TIMEZONE}
+
+sed -n '183,$p' ./SAMI_PART3.sh  >> ./SAMI_PART4.sh
 # zsh4humans
-wget --timeout=5 https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install && sh install && rm install
+wget --timeout=5 https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install && sh install && sh ./SAMI_PART4.sh
 
 # Migrate dotfiles
-cd $USER_HOME
-git clone --bare https://github.com/samisthefbi/dotfiles $USER_HOME/.dotfiles
+cd $HOME
+git clone --bare https://github.com/samisthefbi/dotfiles $HOME/.dotfiles
 
 function dots {
-	git --git-dir=${USER_HOME}/.dotfiles/ --work-tree=${USER_HOME} $@
+	git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME} $@
 }
 
 dots checkout
 if [ $? == 0 ]; then
 	echo "All is good"
 else
-	echo "Backing up conflicting pre-existing files..."
-	mkdir -p $USER_HOME/dots-backup
-	dots checkout 2>&1 | grep -E "\s+\." | awk -F '\t' {'print $2'} | xargs -I{} echo {} | awk -F '/' 'BEGIN{OFS="/"}; {NF--}; {print $0}' | xargs -I{} mkdir -p ${USER_HOME}/dots-backup/{}
-	dots checkout 2>&1 | grep -E "\s+\." | awk -F '\t' {'print $2'} | xargs -I{} mv {} $USER_HOME/dots-backup/{}
+	echo "Backing up conflicting pre-existing files to ~/dots-backup ..."
+	mkdir -p $HOME/dots-backup
+	dots checkout 2>&1 | grep -E "\s+\." | awk -F '\t' {'print $2'} | xargs -I{} echo {} | awk -F '/' 'BEGIN{OFS="/"}; {NF--}; {print $0}' | xargs -I{} mkdir -p ${HOME}/dots-backup/{}
+	dots checkout 2>&1 | grep -E "\s+\." | awk -F '\t' {'print $2'} | xargs -I{} mv {} $HOME/dots-backup/{}
 fi
 dots checkout
 dots config status.showUntrackedFiles no
@@ -190,7 +203,7 @@ dots config status.showUntrackedFiles no
 echo -e "${TTY_SCRIPT} Are you trying to dual boot with a Windows OS? [YES/NO]"
 read ans
 if [[ ${ans} == YES ]]; then
-	echo -e "${TTY_NOTE} You need to mount a Windows partition first to be able to detect it."
+	echo -e "${TTY_NOTE} You need to mount any one Windows partition first to be able to detect it."
 	echo -e "${TTY_NOTE} Running cfdisk in 5s, please note the path to any one Windows partition."
 	echo -e "${TTY_NOTE} It should be something like /dev/sda1, /dev/sda2... ${TTY_NORMAL}"
 	echo -e "${TTY_NOTE} or /dev/nvme0n1p1, /dev/nvme0n1p2... ${TTY_NORMAL}" 
@@ -203,16 +216,3 @@ if [[ ${ans} == YES ]]; then
 	sudo ntfs-3g ${WIN_PART} ${HOME}/Windows &
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
-
-sudo systemctl enable slim
-sudo systemctl enable wireplumber
-sudo systemctl enable bluetooth
-sudo systemctl enable smb
-sudo systemctl enable wsdd2
-systemctl enable --user mpd
-systemctl enable --user mpd-mpris
-systemctl enable --user pipewire
-
-echo -e "\n${TTY_SCRIPT} Finally you have installed Arch Linux on your PC!"
-echo -e "${TTY_SCRIPT} What's left now is to customize it to suit your needs."
-echo -e "${TTY_SCRIPT} Shutdown, remove the Arch installation medium and boot into ArchLinux through the Grub bootloader menu"
